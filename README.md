@@ -29,7 +29,7 @@
     <img alt="VS Code Marketplace Rating" src="https://vsmarketplacebadges.dev/rating/mrcodium.notehub-vscode.svg?color=blue" />
   </p>
 
-  <img src="media/screenshots/demo.gif" alt="NoteHub Demo" width="700" />
+  <img src="media/demo.gif" alt="NoteHub Demo" width="700" />
 </div>
 
 <details>
