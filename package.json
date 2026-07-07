@@ -1,13 +1,17 @@
 {
   "name": "notehub-vscode",
-  "displayName": "NoteHub",
+  "displayName": "NoteHub Official",
   "description": "Browse your NoteHub collections and notes right in the VS Code sidebar, with a rich-text note viewer.",
-  "version": "0.1.0",
+  "version": "1.0.1",
   "publisher": "mrcodium",
-  "engines": {
-    "vscode": "^1.85.0"
-  },
+  "engines": { "vscode": "^1.85.0"},
   "categories": ["Other"],
+  "icon": "media/logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abhijeetSinghRajput/notehub-vscode"
+  },
+  "license": "MIT",
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
