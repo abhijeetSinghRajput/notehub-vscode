@@ -4,8 +4,8 @@
   <h1>NoteHub</h1>
 
   <p>
-    Browse, search, and read your NoteHub notes directly inside VS Code.
-    Organize collections, open rich-text notes, and stay focused without leaving your editor.
+    Bring <a href="https://notehub-official.vercel.app">NoteHub</a> into your favorite editor.
+    Browse collections, search notes, and read beautifully rendered content without ever leaving VS Code.
   </p>
 
   <p align="center">
