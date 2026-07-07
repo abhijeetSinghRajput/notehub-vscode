@@ -61,7 +61,7 @@ The extension supports rich text, syntax-highlighted code blocks, mathematical e
 
 Whether you're documenting projects, storing snippets, or writing technical notes, everything stays one shortcut away.
 
-![NoteHub Preview](media/screenshots/banner.png)
+![NoteHub Preview](media/banner.png)
 
 ---
 
