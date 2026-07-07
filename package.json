@@ -1,0 +1,116 @@
+{
+  "name": "notehub-vscode",
+  "displayName": "NoteHub",
+  "description": "Browse your NoteHub collections and notes right in the VS Code sidebar, with a rich-text note viewer.",
+  "version": "0.1.0",
+  "publisher": "mrcodium",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "notehub",
+          "title": "NoteHub",
+          "icon": "media/activity-icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "notehub": [
+        {
+          "id": "notehubExplorer",
+          "name": "Collections",
+          "icon": "media/activity-icon.svg"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "notehubExplorer",
+        "contents": "Sign in to NoteHub to browse your collections and notes.\n[Sign in](command:notehub.login)",
+        "when": "notehub.configured == false"
+      }
+    ],
+    "commands": [
+      {
+        "command": "notehub.refresh",
+        "title": "NoteHub: Refresh",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "notehub.login",
+        "title": "NoteHub: Sign In",
+        "icon": "$(account)"
+      },
+      {
+        "command": "notehub.logout",
+        "title": "NoteHub: Sign Out"
+      },
+      {
+        "command": "notehub.openNote",
+        "title": "NoteHub: Open Note"
+      },
+      {
+        "command": "notehub.openInBrowser",
+        "title": "NoteHub: Open in Browser",
+        "icon": "$(link-external)"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "notehub.refresh",
+          "when": "view == notehubExplorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "notehub.login",
+          "when": "view == notehubExplorer && notehub.configured == false",
+          "group": "navigation@2"
+        },
+        {
+          "command": "notehub.logout",
+          "when": "view == notehubExplorer && notehub.configured == true",
+          "group": "navigation@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "notehub.openInBrowser",
+          "when": "view == notehubExplorer && viewItem =~ /^(collection|note)/",
+          "group": "inline"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "NoteHub",
+      "properties": {
+        "notehub.apiBaseUrl": {
+          "type": "string",
+          "default": "https://notehub-38kp.onrender.com/api",
+          "description": "Base URL of the NoteHub API."
+        },
+        "notehub.siteBaseUrl": {
+          "type": "string",
+          "default": "https://notehub-official.vercel.app",
+          "description": "Base URL of the NoteHub website (used for 'Open in Browser')."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.4.0"
+  }
+}
