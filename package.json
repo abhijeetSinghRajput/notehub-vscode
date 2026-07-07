@@ -2,7 +2,7 @@
   "name": "notehub-vscode",
   "displayName": "NoteHub Official",
   "description": "Browse your NoteHub collections and notes right in the VS Code sidebar, with a rich-text note viewer.",
-  "version": "1.0.1",
+  "version": "1.2.0",
   "publisher": "mrcodium",
   "engines": { "vscode": "^1.85.0"},
   "categories": ["Other"],
