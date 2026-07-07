@@ -1,0 +1,457 @@
+/*
+ * notehub-richtext.css
+ * Read-only rich-text rendering styles for the NoteHub VS Code note viewer.
+ *
+ * Trimmed from the app's global stylesheet — removed everything that only
+ * applies to the live TipTap *editor* (drag handles, table resize/menu
+ * controls, slash-command list, combobox/select pickers, placeholder
+ * hints, .ProseMirror-only rules) since the webview only ever renders
+ * finished, read-only note content.
+ *
+ * CSS variables below are mapped onto VS Code's theme variables so this
+ * adapts to whatever color theme the user has active, light or dark.
+ */
+
+:root {
+  --border: var(--vscode-panel-border, rgba(127, 127, 127, 0.35));
+  --muted-foreground: var(--vscode-descriptionForeground, #999999);
+  --accent: var(--vscode-list-hoverBackground, rgba(127, 127, 127, 0.15));
+  --accent-foreground: var(--vscode-editor-foreground, #ddd);
+  --background: var(--vscode-editor-background, #1e1e1e);
+  --primary: var(--vscode-textLink-foreground, #4daafc);
+  --primary-foreground: #ffffff;
+  --destructive: #e5484d;
+}
+
+/* ── Font ── */
+.note-view {
+  font-family: "Merriweather", Georgia, "Times New Roman", serif;
+  tab-size: 2;
+  -moz-tab-size: 2;
+}
+
+/* ── Headings ──
+ * Content arrives with its original (unshifted) h1–h6 tags. The site
+ * shifts them down one level at render time (h1→h2 … h5→h6) because the
+ * page's own <h1> is reserved for the note title. We render the note
+ * title separately too, so we apply the *shifted* size scale directly to
+ * the *unshifted* tags to get the same visual hierarchy without needing
+ * a DOM pass.
+ */
+.note-view h1 {
+  font-size: 2em;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 2rem;
+}
+
+.note-view h2 {
+  font-size: 1.6em;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.note-view h3 {
+  font-size: 1.35em;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.note-view h4 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.note-view h5,
+.note-view h6 {
+  font-size: 1em;
+  font-weight: 600;
+  margin: 0;
+}
+
+/* ── Paragraphs ── */
+.note-view p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  line-height: 1.75;
+}
+
+.note-view p:not(:first-child) {
+  margin-top: 0.5rem;
+}
+
+.note-view p:empty,
+.note-view p:has(> br:only-child) {
+  min-height: 1.75em;
+}
+
+/* ── Links ── */
+.note-view a {
+  color: var(--primary);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+.note-view a:hover {
+  text-decoration: underline dotted;
+}
+
+/* ── Lists ── */
+.note-view ul {
+  list-style: disc;
+}
+
+.note-view ol {
+  list-style: decimal;
+}
+
+.note-view li::marker {
+  font-weight: bold;
+}
+
+.note-view ol,
+.note-view ul {
+  margin-bottom: 1rem;
+  padding-left: 1.6rem;
+}
+
+.note-view p + :where(ol, ul) {
+  margin-top: 0;
+}
+
+.note-view li {
+  margin-bottom: 8px;
+}
+
+.note-view li p {
+  margin-bottom: 0;
+}
+
+/* ── Task lists ── */
+.note-view ul[data-type="taskList"] {
+  list-style: none;
+  margin-left: 0;
+  padding: 0;
+}
+
+.note-view ul[data-type="taskList"] li {
+  display: flex;
+  align-items: flex-start;
+}
+
+.note-view ul[data-type="taskList"] li p {
+  font-weight: 600;
+}
+
+.note-view ul[data-type="taskList"] li > label {
+  flex: 0 0 auto;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.note-view ul[data-type="taskList"] li > div {
+  flex: 1 1 auto;
+}
+
+.note-view ul[data-type="taskList"] ul[data-type="taskList"] {
+  margin: 0;
+}
+
+.note-view ul[data-type="taskList"] li[data-checked="true"] p {
+  color: var(--muted-foreground);
+  text-decoration-line: line-through;
+}
+
+.note-view ul[data-type="taskList"] input[type="checkbox"] {
+  margin-top: 1.5px;
+  overflow: hidden;
+  position: relative;
+  appearance: none;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid var(--primary);
+  border-radius: 0.125rem;
+  cursor: pointer;
+}
+
+.note-view ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"] {
+  background-color: var(--primary);
+}
+
+.note-view ul[data-type="taskList"] li[data-checked="true"] input[type="checkbox"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--primary-foreground);
+  -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>') center / contain no-repeat;
+  mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>') center / contain no-repeat;
+}
+
+/* ── Inline code ── */
+.note-view :is(h1, h2, h3, h4, h5, h6, p) code {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  background-color: color-mix(in oklch, var(--accent-foreground) 12%, transparent);
+  padding: 2.4px 4.8px;
+  border-radius: 0.375rem;
+  white-space: pre-wrap;
+}
+
+/* ── Code blocks ──
+ * highlight.js adds its own .hljs background/colors on top of this;
+ * these rules just handle layout, not syntax colors.
+ */
+.note-view pre {
+  white-space: pre;
+  overflow-x: auto;
+  tab-size: 4;
+  display: flex;
+  background-color: #181818;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  margin: 1rem 0;
+}
+
+.note-view pre code {
+  padding: 0;
+  margin: 0;
+  line-height: 1.625;
+  white-space: pre;
+  font-size: 0.875em;
+  display: block;
+}
+
+/* ── Blockquote ── */
+.note-view blockquote {
+  border-left: 4px solid var(--border);
+  margin: 1rem 0;
+  padding: 0.5rem 0 0.5rem 1.5rem;
+  font-style: italic;
+  background-color: color-mix(in oklch, var(--accent) 30%, transparent);
+  color: var(--muted-foreground);
+}
+
+/* ── Horizontal rule ── */
+.note-view hr {
+  border: 1px solid var(--border);
+  margin: 3rem 0;
+}
+
+/* ── Tables ── */
+.note-view table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: auto;
+  width: 100%;
+  margin: 0 0 1.5rem 0;
+  display: table;
+  font-size: 0.875em;
+  line-height: 20px;
+}
+
+.note-view .tableWrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin: 0 0 1.5rem 0;
+}
+
+.note-view .tableWrapper table {
+  margin: 0;
+}
+
+@media (min-width: 769px) {
+  .note-view table {
+    table-layout: fixed;
+  }
+}
+
+.note-view td,
+.note-view th {
+  border: none;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: start;
+  padding: 8px 12px;
+  white-space: break-spaces;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.note-view td > *,
+.note-view th > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.note-view td p,
+.note-view th p {
+  min-height: 1.4em;
+  margin: 0;
+}
+
+.note-view th {
+  font-weight: 600;
+  white-space: nowrap;
+  text-align: left;
+  background-color: color-mix(in oklch, var(--accent) 70%, transparent);
+}
+
+.note-view td:empty,
+.note-view th:empty {
+  color: color-mix(in oklch, var(--muted-foreground) 60%, transparent);
+}
+
+/* ── Math (KaTeX-rendered) ── */
+.note-view .tiptap-mathematics-render {
+  padding: 0 0.25rem;
+  border-radius: 0.25rem;
+}
+
+.note-view .tiptap-mathematics-render[data-type="block-math"] {
+  display: block;
+  margin: 1rem 0;
+  padding: 1rem;
+  text-align: center;
+}
+
+.note-view .tiptap-mathematics-render.inline-math-error,
+.note-view .tiptap-mathematics-render.block-math-error {
+  background-color: color-mix(in oklch, var(--destructive) 10%, transparent);
+  border: 1px solid color-mix(in oklch, var(--destructive) 50%, transparent);
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  color: var(--destructive);
+}
+
+/* ── Images ── */
+.note-view img {
+  margin: 16px 0;
+  display: block;
+  height: auto;
+  max-width: 100%;
+  border-radius: 0.375rem;
+}
+
+.note-view [data-align="left"] {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+.note-view [data-align="center"] {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.note-view [data-align="right"] {
+  margin-left: auto;
+  margin-right: 0;
+}
+
+
+
+/* Base */
+code.hljs,
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #fff;
+  word-wrap: normal;
+  background: none;
+  -webkit-hyphens: none;
+  hyphens: none;
+  line-height: 1.5;
+  tab-size: 4;
+  white-space: pre;
+  word-break: normal;
+  word-spacing: normal;
+}
+
+/* Prism token overrides */
+.token.selector,
+.token.string {
+  color: #abe338;
+}
+
+[dir="ltr"] code.hljs,
+[dir="ltr"] code[class*="language-"],
+[dir="ltr"] pre[class*="language-"] {
+  text-align: left;
+}
+
+[dir="rtl"] code.hljs,
+[dir="rtl"] code[class*="language-"],
+[dir="rtl"] pre[class*="language-"] {
+  text-align: right;
+}
+
+pre[class*="language-"] {
+  border-radius: 0.3em;
+  overflow: auto;
+}
+
+:not(pre) > code.hljs,
+:not(pre) > code[class*="language-"] {
+  border-radius: 0.3em;
+  padding: 0.1em;
+  white-space: normal;
+}
+
+/* Comments */
+.hljs-comment {
+  color: #616161;
+}
+
+/* Meta */
+.hljs-meta {
+  color: #fff9;
+}
+
+/* Built-ins & Class Titles */
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #e9950c;
+}
+
+/* Keywords & Literals */
+.hljs-doctag,
+.hljs-formula,
+.hljs-keyword,
+.hljs-tag,
+.hljs-literal {
+  color: #70cff8;
+}
+
+/* Strings & Attributes */
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string,
+.hljs-regexp,
+.hljs-string {
+  color: #b9f18d;
+}
+
+/* Numbers & Variables */
+.hljs-attr,
+.hljs-number,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-pseudo,
+.hljs-template-variable,
+.hljs-type,
+.hljs-variable {
+  color: #fbbc88;
+}
+
+/* Links & Sections */
+.hljs-bullet,
+.hljs-link,
+.hljs-selector-id,
+.hljs-symbol,
+.hljs-section,
+.hljs-title {
+  color: #faf594;
+}
