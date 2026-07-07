@@ -2,10 +2,14 @@
   "name": "notehub-vscode",
   "displayName": "NoteHub Official",
   "description": "Browse your NoteHub collections and notes right in the VS Code sidebar, with a rich-text note viewer.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "publisher": "mrcodium",
-  "engines": { "vscode": "^1.85.0"},
-  "categories": ["Other"],
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
   "icon": "media/logo.png",
   "repository": {
     "type": "git",
@@ -15,6 +19,14 @@
   "activationEvents": [],
   "main": "./out/extension.js",
   "contributes": {
+    "keybindings": [
+      {
+        "command": "notehub.search",
+        "key": "ctrl+alt+k",
+        "mac": "cmd+alt+k",
+        "when": "view == notehubExplorer"
+      }
+    ],
     "viewsContainers": {
       "activitybar": [
         {
@@ -42,6 +54,11 @@
     ],
     "commands": [
       {
+        "command": "notehub.search",
+        "title": "Search Notes (ctrl+alt+k)",
+        "icon": "$(search)"
+      },
+      {
         "command": "notehub.refresh",
         "title": "NoteHub: Refresh",
         "icon": "$(refresh)"
@@ -53,7 +70,8 @@
       },
       {
         "command": "notehub.logout",
-        "title": "NoteHub: Sign Out"
+        "title": "NoteHub: Sign Out",
+        "icon": "$(sign-out)"
       },
       {
         "command": "notehub.openNote",
@@ -67,6 +85,11 @@
     ],
     "menus": {
       "view/title": [
+        {
+          "command": "notehub.search",
+          "when": "view == notehubExplorer",
+          "group": "navigation"
+        },
         {
           "command": "notehub.refresh",
           "when": "view == notehubExplorer",
@@ -113,7 +136,7 @@
     "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
-    "@types/node": "^20.11.0",
+    "@types/node": "^20.19.43",
     "@types/vscode": "^1.85.0",
     "typescript": "^5.4.0"
   }

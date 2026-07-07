@@ -1,0 +1,181 @@
+:root {
+  color-scheme: light dark;
+}
+
+body {
+  font-family: var(
+    --vscode-editor-font-family,
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif
+  );
+  color: var(--vscode-editor-foreground, #ddd);
+  background: var(--vscode-editor-background, #1e1e1e);
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 32px 24px 96px;
+  line-height: 1.7;
+  font-size: 14px;
+}
+
+.note-meta {
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px dashed var(--vscode-panel-border, #333);
+}
+.note-meta h1 {
+  font-size: 30px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0 0 16px;
+  color: var(--vscode-editor-foreground);
+}
+
+.note-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  background: color-mix(
+    in srgb,
+    var(--vscode-descriptionForeground, #999) 12%,
+    transparent
+  );
+  color: var(--vscode-descriptionForeground, #999);
+  border: 1px solid transparent;
+}
+.badge svg {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+.badge-public {
+  background: color-mix(in srgb, #22c55e 8%, transparent);
+  border-color: color-mix(in srgb, #22c55e 25%, transparent);
+  color: #4ade80;
+}
+.badge-private {
+  background: color-mix(
+    in srgb,
+    var(--vscode-errorForeground, #f14c4c) 8%,
+    transparent
+  );
+  border-color: color-mix(
+    in srgb,
+    var(--vscode-errorForeground, #f14c4c) 25%,
+    transparent
+  );
+  color: var(--vscode-errorForeground, #f14c4c);
+}
+
+.note-author-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.note-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.avatar-ring {
+  padding: 2px;
+  border: 2px solid
+    color-mix(
+      in srgb,
+      var(--vscode-textLink-foreground, #3794ff) 12%,
+      transparent
+    );
+  border-radius: 999px;
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+}
+.avatar-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+  display: block;
+}
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+.author-name {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--vscode-editor-foreground);
+}
+.admin-badge svg {
+  width: 16px;
+  height: 16px;
+  color: var(--vscode-textLink-foreground, #3794ff);
+}
+.author-username {
+  font-size: 13px;
+  color: var(--vscode-descriptionForeground, #999);
+}
+
+.copy-md-btn svg {
+  width: 12px;
+  height: 12px;
+}
+.copy-md-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border: 1px dashed var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--vscode-editor-foreground);
+  cursor: pointer;
+}
+.copy-md-btn:hover {
+  background: var(--vscode-toolbar-hoverBackground);
+}
+.copy-md-btn.copied {
+  color: #4ade80;
+  border-color: color-mix(in srgb, #22c55e 40%, transparent);
+}
+
+.note-collaborators {
+  display: flex;
+  margin-top: 16px;
+}
+.collab-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 2px solid var(--vscode-editor-background, #1e1e1e);
+  margin-left: -10px;
+  background: var(--vscode-descriptionForeground, #999);
+}
+.collab-avatar:first-child {
+  margin-left: 0;
+}
+.collab-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

@@ -3,11 +3,12 @@ import { NoteAuthor, NoteDetail } from "./api";
 
 // lucide-style icons, stroke-based so they inherit `color` via currentColor
 const ICONS = {
-  calendar: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>`,
-  clock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
-  globe: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
-  lock: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
-  copy: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy size-3" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>`,
+  calendar:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/></svg>`,
+  clock:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>`,
+  globe:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>`,
+  lock:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>`,
+  copy:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-copy size-3" aria-hidden="true"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path></svg>`,
+  wrap:       `<svg viewBox="0 0 24 24" width="16" height="16"  fill="none" stroke="currentColor" strokewidth="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"></line><path d="M3 12h15a3 3 0 1 1 0 6h-4"></path><polyline points="16 16 14 18 16 20"></polyline><line x1="3" y1="18" x2="10" y2="18"></line></svg>`,
   badgeCheck: `<svg viewBox="0 0 24 24" width="24" height="24" fill="#2b7fff" aria-label="Verified" class="size-5 text-blue-500"><path d="M24 12a4.454 4.454 0 0 0-2.564-3.91 4.437 4.437 0 0 0-.948-4.578 4.436 4.436 0 0 0-4.577-.948A4.44 4.44 0 0 0 12 0a4.423 4.423 0 0 0-3.9 2.564 4.434 4.434 0 0 0-2.43-.178 4.425 4.425 0 0 0-2.158 1.126 4.42 4.42 0 0 0-1.12 2.156 4.42 4.42 0 0 0 .183 2.421A4.456 4.456 0 0 0 0 12a4.465 4.465 0 0 0 2.576 3.91 4.433 4.433 0 0 0 .936 4.577 4.459 4.459 0 0 0 4.577.95A4.454 4.454 0 0 0 12 24a4.439 4.439 0 0 0 3.91-2.563 4.26 4.26 0 0 0 5.526-5.526A4.453 4.453 0 0 0 24 12Zm-13.709 4.917-4.38-4.378 1.652-1.663 2.646 2.646L15.83 7.4l1.72 1.591-7.258 7.926Z"></path></svg>`,
 };
 
@@ -63,6 +64,11 @@ export function showNotePanel(
       case "copyMarkdown":
         vscode.env.clipboard.writeText(message.text ?? "");
         vscode.window.setStatusBarMessage("Note copied as Markdown", 2000);
+        break;
+
+      case "copyCode":
+        vscode.env.clipboard.writeText(message.text ?? "");
+        vscode.window.setStatusBarMessage("Code copied", 2000);
         break;
     }
   });
@@ -251,7 +257,6 @@ function renderNoteHtml(
   }
   .copy-md-btn:hover {
     background: var(--vscode-toolbar-hoverBackground);
-    border-color: var(--vscode-editor-foreground);
   }
   .copy-md-btn.copied {
     color: #4ade80;
@@ -317,6 +322,9 @@ function renderNoteHtml(
   <script nonce="${nonce}" src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
   <script nonce="${nonce}" src="${mdScriptUri}"></script>
   <script nonce="${nonce}">
+    const vscodeApi = acquireVsCodeApi();
+    const noteHtml = ${noteHtmlJson};
+
     if (window.hljs) {
       document.querySelectorAll('pre code').forEach((block) => {
         try { window.hljs.highlightElement(block); } catch (e) {}
@@ -334,8 +342,41 @@ function renderNoteHtml(
       });
     }
 
-    const vscodeApi = acquireVsCodeApi();
-    const noteHtml = ${noteHtmlJson};
+    document.querySelectorAll("pre").forEach((pre) => {
+      const code = pre.querySelector("code");
+      if (!code) return;
+      if (pre.parentElement?.classList.contains("pre-wrapper")) return;
+
+      const lang =
+        [...code.classList].find((c) => c.startsWith("language-"))?.replace("language-", "") || "text";
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "pre-wrapper";
+
+      const header = document.createElement("header");
+      header.className = "pre-header";
+      header.innerHTML = \`
+        <span class="pre-language">\${lang}</span>
+        <div class="pre-actions">
+          <button class="wrap-code-button" title="Wrap Line">${ICONS.wrap}</button>
+          <button class="copy-code-button" title="Copy code">${ICONS.copy}</button>
+        </div>
+      \`;
+
+      pre.parentNode.insertBefore(wrapper, pre);
+      wrapper.appendChild(header);
+      wrapper.appendChild(pre);
+
+      const copyBtn = header.querySelector(".copy-code-button");
+      copyBtn?.addEventListener("click", () => {
+        vscodeApi.postMessage({ type: "copyCode", text: code.textContent ?? "" });
+        copyBtn.classList.add('copied');
+        setTimeout(() => copyBtn.classList.remove('copied'), 1500);
+      });
+
+      const wrapBtn = header.querySelector(".wrap-code-button");
+      wrapBtn?.addEventListener("click", () => pre.classList.toggle("wrap"));
+    });
 
     document.getElementById('copy-md-btn')?.addEventListener('click', () => {
       const md = window.NoteMD ? window.NoteMD.htmlToMarkdown(noteHtml) : '';

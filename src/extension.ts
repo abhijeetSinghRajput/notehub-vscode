@@ -3,6 +3,7 @@ import { fetchNote, NoteSummary } from "./api";
 import { NoteHubTreeProvider, NoteNode, CollectionNode } from "./treeProvider";
 import { showNotePanel } from "./noteWebview";
 import { AuthManager } from "./auth";
+import { registerSearchCommand } from "./search";
 
 export function activate(context: vscode.ExtensionContext): void {
   const auth = new AuthManager(context);
@@ -11,6 +12,26 @@ export function activate(context: vscode.ExtensionContext): void {
     treeDataProvider: treeProvider,
   });
   context.subscriptions.push(treeView);
+
+  registerSearchCommand(context, auth, async (note) => {
+    const config = vscode.workspace.getConfiguration("notehub");
+    const apiBaseUrl = config.get<string>("apiBaseUrl", "");
+    const user = await auth.getUser();
+
+    if (!user) {
+      return;
+    }
+
+    const { note: fullNote, author } = await fetchNote(
+      apiBaseUrl,
+      note.userId.userName,
+      note.collectionId.slug,
+      note.slug,
+      {},
+    );
+
+    showNotePanel(context, fullNote, author);
+  });
 
   // Reflect login state into the tree title so it's always visible at a glance.
   const refreshTitle = async () => {
@@ -153,9 +174,15 @@ export function activate(context: vscode.ExtensionContext): void {
     ),
   );
 
-  void auth.isLoggedIn().then((loggedIn) =>
-    vscode.commands.executeCommand("setContext", "notehub.configured", loggedIn),
-  );
+  void auth
+    .isLoggedIn()
+    .then((loggedIn) =>
+      vscode.commands.executeCommand(
+        "setContext",
+        "notehub.configured",
+        loggedIn,
+      ),
+    );
 }
 
 export function deactivate(): void {}

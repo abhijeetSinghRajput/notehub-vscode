@@ -213,8 +213,7 @@
   display: flex;
   background-color: #181818;
   padding: 1rem;
-  border-radius: 0.75rem;
-  margin: 1rem 0;
+  margin: 0;
 }
 
 .note-view pre code {
@@ -224,6 +223,57 @@
   white-space: pre;
   font-size: 0.875em;
   display: block;
+}
+
+.note-view .pre-wrapper {
+  border-radius: 0.75rem;
+  overflow: hidden;
+  margin: 1rem 0;
+  font-family: monospace;
+}
+
+.note-view .pre-header {
+  background: #222;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid rgb(136 136 136 / 50%);
+}
+.note-view .pre-language {
+  font-size: 12px;
+  font-weight: 500;
+  color: #b9b9b9;
+}
+
+.pre-actions {
+  display: flex;
+  gap: 6px;
+}
+
+button svg {
+  width: 16px;
+  height: 16px;
+}
+
+.pre-actions button:hover{
+  background-color: #404040;
+}
+
+.pre-actions button {
+  height: 28px;
+  width: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: white;
+  border-radius: 6px;
+  stroke-width: 1;
+  border: none;
+  cursor: pointer;
+  padding: 3px;
 }
 
 /* ── Blockquote ── */

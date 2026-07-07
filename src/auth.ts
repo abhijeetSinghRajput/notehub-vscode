@@ -22,7 +22,8 @@ export class AuthManager {
   readonly onDidChangeSession = this._onDidChangeSession.event;
 
   private session: StoredSession | undefined;
-  private loaded = false;
+  private loadPromise: Promise<void> | undefined;  
+
 
   constructor(private readonly context: vscode.ExtensionContext) {}
 
@@ -33,17 +34,20 @@ export class AuthManager {
       .replace(/\/$/, "");
   }
 
-  private async ensureLoaded(): Promise<void> {
-    if (this.loaded) return;
-    this.loaded = true;
-    const raw = await this.context.secrets.get(SECRET_KEY);
-    if (raw) {
-      try {
-        this.session = JSON.parse(raw) as StoredSession;
-      } catch {
-        this.session = undefined;
-      }
+  private ensureLoaded(): Promise<void> {
+    if (!this.loadPromise) {
+      this.loadPromise = (async () => {
+        const raw = await this.context.secrets.get(SECRET_KEY);
+        if (raw) {
+          try {
+            this.session = JSON.parse(raw) as StoredSession;
+          } catch {
+            this.session = undefined;
+          }
+        }
+      })();
     }
+    return this.loadPromise;
   }
 
   async getUser(): Promise<NoteHubUser | undefined> {

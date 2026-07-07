@@ -11,5 +11,6 @@
     "skipLibCheck": true,
     "resolveJsonModule": true
   },
+  "types": ["node", "vscode"],
   "exclude": ["node_modules", ".vscode-test"]
 }
